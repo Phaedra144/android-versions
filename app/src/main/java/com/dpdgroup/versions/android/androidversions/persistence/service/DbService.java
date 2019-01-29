@@ -6,7 +6,6 @@ import com.dpdgroup.versions.android.androidversions.persistence.entity.Version;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 
 public class DbService {
 
@@ -26,5 +25,14 @@ public class DbService {
             androidVersionList.add(androidVersion);
         }
         return androidVersionList;
+    }
+
+    public List<Version> getEntitiesFromAndroidVersions(List<AndroidVersion> androidVersions) {
+        List<Version> entities = new ArrayList<>();
+        for (AndroidVersion androidVersion : androidVersions) {
+            Version version = new Version(androidVersion.getImageUrl(), androidVersion.getRelaseDate(), androidVersion.getVersionNumber(), androidVersion.getRowType(), androidVersion.getCodeName(), androidVersion.getApiLevel());
+            entities.add(version);
+        }
+        return entities;
     }
 }

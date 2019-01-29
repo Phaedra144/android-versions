@@ -9,7 +9,7 @@ import lombok.Getter;
 @Entity
 public class Version {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
     @ColumnInfo(name = "image_url")
     public String imageUrl;
@@ -23,4 +23,13 @@ public class Version {
     public String codeName;
     @ColumnInfo(name = "api_level")
     public int apiLevel;
+
+    public Version(String imageUrl, int relaseDate, String versionNumber, int rowType, String codeName, int apiLevel) {
+        this.imageUrl = imageUrl;
+        this.relaseDate = relaseDate;
+        this.versionNumber = versionNumber;
+        this.rowType = rowType;
+        this.codeName = codeName;
+        this.apiLevel = apiLevel;
+    }
 }

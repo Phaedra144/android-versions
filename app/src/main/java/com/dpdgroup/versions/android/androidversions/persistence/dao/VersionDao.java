@@ -15,6 +15,9 @@ public interface VersionDao {
     List<Version> getAll();
 
     @Insert
-    void insertAll(Version... versions);
+    void insertAll(List<Version> versions);
+
+    @Query("DELETE FROM version")
+    public void deleteTable();
 
 }
