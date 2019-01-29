@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.rectangle));
         recyclerView.addItemDecoration(itemDecorator);
-        recyclerView.setAdapter(new AndroidVersionAdapter(androidVersions));
+        recyclerView.setAdapter(new AndroidVersionAdapter(androidVersions, MainActivity.this));
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
     }
 
@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
             activityReference.get().dbVersions.getVersionDao().insertAll(versions);
             return true;
         }
+
         // onPostExecute runs on main thread
         @Override
         protected void onPostExecute(Boolean bool) {
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static class RetrieveTask extends AsyncTask<Void, Void, List<Version>> {
         private WeakReference<MainActivity> activityReference;
+
         // only retain a weak reference to the activity
         RetrieveTask(MainActivity context) {
             activityReference = new WeakReference<>(context);
@@ -137,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             else
                 return null;
         }
+
         @Override
         protected void onPostExecute(List<Version> versions) {
             if (versions != null && versions.size() > 0) {

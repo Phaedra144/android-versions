@@ -1,5 +1,7 @@
 package com.dpdgroup.versions.android.androidversions.adapter;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +15,37 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAdapter.VersionsAdepterViewHolder> {
 
     ArrayList<AndroidVersion> androidVersions;
+    Context context;
+    RecyclerView recyclerView;
+    boolean isClicked = true;
 
-    public AndroidVersionAdapter(ArrayList<AndroidVersion> androidVersions) {
+    public AndroidVersionAdapter(ArrayList<AndroidVersion> androidVersions, Context context) {
         this.androidVersions = androidVersions;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public VersionsAdepterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_android_version, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_android_version, parent, false);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isClicked) {
+                    view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+                    isClicked = false;
+                } else {
+                    view.setBackgroundColor(Color.TRANSPARENT);
+                    isClicked = true;
+                }
+            }
+        });
         return new VersionsAdepterViewHolder(view);
     }
 
@@ -41,6 +60,12 @@ public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAd
     @Override
     public int getItemCount() {
         return androidVersions.size();
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        this.recyclerView = recyclerView;
     }
 
     class VersionsAdepterViewHolder extends RecyclerView.ViewHolder {
