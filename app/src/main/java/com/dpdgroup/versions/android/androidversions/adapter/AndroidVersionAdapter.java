@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.dpdgroup.versions.android.androidversions.R;
 import com.dpdgroup.versions.android.androidversions.model.AndroidVersion;
+import com.dpdgroup.versions.android.androidversions.persistence.entity.Version;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -34,7 +36,7 @@ public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAd
         holder.codeName.setText(androidVersions.get(position).getCodeName());
         holder.apiLevel.setText("Api level: " + androidVersions.get(position).getApiLevel());
         holder.relaseDate.setText("Relase date: " + androidVersions.get(position).convertToNiceDateFormat(String.valueOf(androidVersions.get(position).getRelaseDate())));
-//        getImages(viewHolder, androidVersions.get(position)); to be implemented
+        getImages(holder, androidVersions.get(position));
     }
 
     @Override
@@ -54,5 +56,10 @@ public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAd
             relaseDate = v.findViewById(R.id.relaseDateText);
             androidImage = v.findViewById(R.id.versionImage);
         }
+    }
+
+    private void getImages(VersionsAdepterViewHolder holder, AndroidVersion version) {
+        holder.androidImage.setImageBitmap(null);
+        Picasso.get().load(version.getImageUrl()).placeholder(R.drawable.android_bike).resize(150, 150).centerCrop().into(holder.androidImage);
     }
 }

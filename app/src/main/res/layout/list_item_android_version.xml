@@ -22,7 +22,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             card_view:layout_column="1"
-            card_view:layout_gravity="center"
+            card_view:layout_gravity="end"
             card_view:layout_row="0" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_marginTop="15dp"
             android:textSize="12sp"
             card_view:layout_column="1"
-            card_view:layout_gravity="center"
+            card_view:layout_gravity="end"
             card_view:layout_row="1" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_marginTop="15dp"
             android:textSize="12sp"
             card_view:layout_column="1"
-            card_view:layout_gravity="center_vertical"
+            card_view:layout_gravity="top|end"
             card_view:layout_row="2" />
 
         <ImageView
