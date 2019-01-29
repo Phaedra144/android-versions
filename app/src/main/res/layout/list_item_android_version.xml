@@ -1,0 +1,63 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:paddingTop="100dp"
+    card_view:cardCornerRadius="4dp">
+
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        card_view:columnCount="2"
+        card_view:rowCount="3">
+
+        <TextView
+            android:id="@+id/codeNameText"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            card_view:layout_column="1"
+            card_view:layout_gravity="center"
+            card_view:layout_row="0" />
+
+        <TextView
+            android:id="@+id/apiLevelText"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="12sp"
+            card_view:layout_column="1"
+            card_view:layout_gravity="center"
+            card_view:layout_row="1" />
+
+        <TextView
+            android:id="@+id/relaseDateText"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="12sp"
+            card_view:layout_column="1"
+            card_view:layout_gravity="center_vertical"
+            card_view:layout_row="2" />
+
+        <ImageView
+            android:id="@+id/versionImage"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="15dp"
+            card_view:layout_column="0"
+            card_view:layout_columnWeight="1"
+            card_view:layout_gravity="center_vertical"
+            card_view:layout_row="0"
+            card_view:layout_rowSpan="3"
+            card_view:layout_rowWeight="1" />
+    </androidx.gridlayout.widget.GridLayout>
+
+</androidx.cardview.widget.CardView>

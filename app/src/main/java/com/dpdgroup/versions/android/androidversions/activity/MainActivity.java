@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dpdgroup.versions.android.androidversions.R;
+import com.dpdgroup.versions.android.androidversions.adapter.AndroidVersionAdapter;
 import com.dpdgroup.versions.android.androidversions.model.AndroidVersion;
 import com.dpdgroup.versions.android.androidversions.network.AndroidVersionsAPI;
 import com.dpdgroup.versions.android.androidversions.network.RetrofitService;
@@ -21,6 +22,8 @@ import java.util.Collections;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     static List<AndroidVersion> savedVersions = new ArrayList<>();
     List<Version> entities = new ArrayList<>();
-    TextView hello;
     AppDatabase dbVersions;
     DbService dbService = new DbService();
 
@@ -37,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        hello = findViewById(R.id.helloText);
         requestAndroidVersions();
         displayList();
     }
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         Collections.sort(savedVersions);
         Collections.sort(entities);
         for (int i = 0; i < savedVersions.size(); i++) {
-            if(!savedVersions.get(i).getCodeName().equals(entities.get(i).getCodeName())) {
+            if (!savedVersions.get(i).getCodeName().equals(entities.get(i).getCodeName())) {
                 result = false;
                 break;
             }
@@ -113,15 +114,12 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("entity - Code name", v.getCodeName());
                 }
 
-
                 // create and set the adapter on RecyclerView instance to display list
 //                activityReference.get().notesAdapter = new NotesAdapter(notes, activityReference.get());
 //                activityReference.get().recyclerView.setAdapter(activityReference.get().notesAdapter);
             }
         }
-
     }
-
 
     private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -146,5 +144,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean bool) {
         }
+    }
+
+    public void initRecycleView(ArrayList<AndroidVersion> androidVersions) {
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setAdapter(new AndroidVersionAdapter(androidVersions));
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
     }
 }
