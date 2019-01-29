@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AndroidVersion {
+public class AndroidVersion implements Comparable<AndroidVersion> {
 
     String imageUrl;
     int relaseDate;
@@ -17,4 +17,9 @@ public class AndroidVersion {
     int rowType;
     String codeName;
     int apiLevel;
+
+    @Override
+    public int compareTo(AndroidVersion o) {
+        return (this.getRelaseDate() - o.getRelaseDate());
+    }
 }

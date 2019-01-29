@@ -17,6 +17,7 @@ import com.dpdgroup.versions.android.androidversions.persistence.service.DbServi
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,10 +50,11 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<AndroidVersionsResponse> call, Response<AndroidVersionsResponse> response) {
                 savedVersions = response.body();
                 if (calledResultEqualsEntities(savedVersions, entities)) {
-                    Toast.makeText(MainActivity.this, "Database is updated, no new item!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Database is up-to-date, no new item!", Toast.LENGTH_SHORT).show();
                 } else {
                     entities = dbService.getEntitiesFromAndroidVersions(savedVersions);
                     new InsertTask(MainActivity.this, entities).execute();
+                    Toast.makeText(MainActivity.this, "Database has been updated with new item(s)!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -68,9 +70,15 @@ public class MainActivity extends AppCompatActivity {
         if (savedVersions.size() != entities.size()) {
             return false;
         }
-        for (AndroidVersion androidVersion : savedVersions) {
+        Collections.sort(savedVersions);
+        Collections.sort(entities);
+        for (int i = 0; i < savedVersions.size(); i++) {
+            if(!savedVersions.get(i).getCodeName().equals(entities.get(i).getCodeName())) {
+                result = false;
+                break;
+            }
         }
-        return false;
+        return result;
     }
 
     private void displayList() {
@@ -138,6 +146,5 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean bool) {
         }
-
     }
 }

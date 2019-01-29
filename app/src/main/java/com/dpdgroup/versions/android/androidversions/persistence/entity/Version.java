@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
-public class Version {
+public class Version implements Comparable<Version> {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -31,5 +31,10 @@ public class Version {
         this.rowType = rowType;
         this.codeName = codeName;
         this.apiLevel = apiLevel;
+    }
+
+    @Override
+    public int compareTo(Version o) {
+        return (this.getRelaseDate() - o.getRelaseDate());
     }
 }
