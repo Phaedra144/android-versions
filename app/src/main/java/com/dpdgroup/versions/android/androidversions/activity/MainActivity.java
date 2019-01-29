@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -74,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void initRecycleView(ArrayList<AndroidVersion> androidVersions) {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(this, R.drawable.rectangle));
+        recyclerView.addItemDecoration(itemDecorator);
         recyclerView.setAdapter(new AndroidVersionAdapter(androidVersions));
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
     }
