@@ -1,5 +1,8 @@
 package com.dpdgroup.versions.android.androidversions.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +15,7 @@ import lombok.Setter;
 public class AndroidVersion implements Comparable<AndroidVersion> {
 
     String imageUrl;
-    int relaseDate;
+    long releaseDate;
     String versionNumber;
     int rowType;
     String codeName;
@@ -20,11 +23,16 @@ public class AndroidVersion implements Comparable<AndroidVersion> {
 
     @Override
     public int compareTo(AndroidVersion o) {
-        return (this.getRelaseDate() - o.getRelaseDate());
+        return (int) (this.getReleaseDate() - o.getReleaseDate());
     }
 
-    public String convertToNiceDateFormat(String startDate) {
-        //to be implemented
-        return startDate;
+    public String convertToNiceDateFormat(long startDate) {
+        String result = String.valueOf(startDate);
+        if (startDate != 0) {
+            Date date = new Date(startDate * 1000);
+            SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+            result = df2.format(date);
+        }
+        return result;
     }
 }

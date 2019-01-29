@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.dpdgroup.versions.android.androidversions.R;
 import com.dpdgroup.versions.android.androidversions.model.AndroidVersion;
-import com.dpdgroup.versions.android.androidversions.persistence.entity.Version;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAd
     public void onBindViewHolder(@NonNull VersionsAdepterViewHolder holder, int position) {
         holder.codeName.setText(androidVersions.get(position).getCodeName());
         holder.apiLevel.setText("Api level: " + androidVersions.get(position).getApiLevel());
-        holder.relaseDate.setText("Relase date: " + androidVersions.get(position).convertToNiceDateFormat(String.valueOf(androidVersions.get(position).getRelaseDate())));
+        holder.relaseDate.setText("Relase date: " + androidVersions.get(position).convertToNiceDateFormat(androidVersions.get(position).getReleaseDate()));
         getImages(holder, androidVersions.get(position));
     }
 

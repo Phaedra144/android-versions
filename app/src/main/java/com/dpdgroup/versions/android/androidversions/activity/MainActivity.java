@@ -3,7 +3,6 @@ package com.dpdgroup.versions.android.androidversions.activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dpdgroup.versions.android.androidversions.R;
@@ -49,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AndroidVersionsResponse> call, Response<AndroidVersionsResponse> response) {
                 savedVersions = response.body();
+                for (AndroidVersion v : savedVersions) {
+                    Log.i("entity -  relase date ", " " + v.getReleaseDate());
+                }
                 initRecycleView((ArrayList<AndroidVersion>) savedVersions);
                 saveToDataBase();
             }
@@ -75,10 +77,9 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Database has been updated with new item(s)!", Toast.LENGTH_SHORT).show();
         }
     }
+
     private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
-
         private WeakReference<MainActivity> activityReference;
-
         private List<Version> versions;
         // only retain a weak reference to the activity
 
@@ -98,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean bool) {
         }
-
     }
 
     private void displayList() {
@@ -107,12 +107,10 @@ public class MainActivity extends AppCompatActivity {
         // fetch list of notes in background thread
         new RetrieveTask(this).execute();
     }
+
     private static class RetrieveTask extends AsyncTask<Void, Void, List<Version>> {
-
-
         private WeakReference<MainActivity> activityReference;
         // only retain a weak reference to the activity
-
         RetrieveTask(MainActivity context) {
             activityReference = new WeakReference<>(context);
         }
@@ -128,11 +126,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(List<Version> versions) {
             if (versions != null && versions.size() > 0) {
                 activityReference.get().entities = versions;
-                for (Version v : activityReference.get().entities) {
-                    Log.i("entity - Code name", v.getCodeName());
-                }
             }
         }
-
     }
 }

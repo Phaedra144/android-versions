@@ -14,7 +14,7 @@ public class Version implements Comparable<Version> {
     @ColumnInfo(name = "image_url")
     public String imageUrl;
     @ColumnInfo(name = "relase_date")
-    public int relaseDate;
+    public long relaseDate;
     @ColumnInfo(name = "version_number")
     public String versionNumber;
     @ColumnInfo(name = "row_type")
@@ -24,7 +24,7 @@ public class Version implements Comparable<Version> {
     @ColumnInfo(name = "api_level")
     public int apiLevel;
 
-    public Version(String imageUrl, int relaseDate, String versionNumber, int rowType, String codeName, int apiLevel) {
+    public Version(String imageUrl, long relaseDate, String versionNumber, int rowType, String codeName, int apiLevel) {
         this.imageUrl = imageUrl;
         this.relaseDate = relaseDate;
         this.versionNumber = versionNumber;
@@ -35,6 +35,6 @@ public class Version implements Comparable<Version> {
 
     @Override
     public int compareTo(Version o) {
-        return (this.getRelaseDate() - o.getRelaseDate());
+        return (int) (this.getRelaseDate() - o.getRelaseDate());
     }
 }
