@@ -12,8 +12,8 @@ import lombok.Setter;
 public class AndroidVersion {
 
     String imageUrl;
-    String relaseDate;
-    int versionNumber;
+    int relaseDate;
+    String versionNumber;
     int rowType;
     String codeName;
     int apiLevel;
