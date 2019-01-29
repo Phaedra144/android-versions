@@ -22,4 +22,9 @@ public class AndroidVersion implements Comparable<AndroidVersion> {
     public int compareTo(AndroidVersion o) {
         return (this.getRelaseDate() - o.getRelaseDate());
     }
+
+    public String convertToNiceDateFormat(String startDate) {
+        //to be implemented
+        return startDate;
+    }
 }

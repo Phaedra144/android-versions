@@ -4,6 +4,7 @@ import com.dpdgroup.versions.android.androidversions.model.AndroidVersion;
 import com.dpdgroup.versions.android.androidversions.persistence.entity.Version;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -34,5 +35,21 @@ public class DbService {
             entities.add(version);
         }
         return entities;
+    }
+
+    public boolean calledResultEqualsEntities(List<AndroidVersion> savedVersions, List<Version> entities) {
+        boolean result = true;
+        if (savedVersions.size() != entities.size()) {
+            return false;
+        }
+        Collections.sort(savedVersions);
+        Collections.sort(entities);
+        for (int i = 0; i < savedVersions.size(); i++) {
+            if (!savedVersions.get(i).getCodeName().equals(entities.get(i).getCodeName())) {
+                result = false;
+                break;
+            }
+        }
+        return result;
     }
 }

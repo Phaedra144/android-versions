@@ -18,7 +18,6 @@ import com.dpdgroup.versions.android.androidversions.persistence.service.DbServi
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,13 +49,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AndroidVersionsResponse> call, Response<AndroidVersionsResponse> response) {
                 savedVersions = response.body();
-                if (calledResultEqualsEntities(savedVersions, entities)) {
-                    Toast.makeText(MainActivity.this, "Database is up-to-date, no new item!", Toast.LENGTH_SHORT).show();
-                } else {
-                    entities = dbService.getEntitiesFromAndroidVersions(savedVersions);
-                    new InsertTask(MainActivity.this, entities).execute();
-                    Toast.makeText(MainActivity.this, "Database has been updated with new item(s)!", Toast.LENGTH_SHORT).show();
-                }
+                initRecycleView((ArrayList<AndroidVersion>) savedVersions);
+                saveToDataBase();
             }
 
             @Override
@@ -66,20 +60,45 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private boolean calledResultEqualsEntities(List<AndroidVersion> savedVersions, List<Version> entities) {
-        boolean result = true;
-        if (savedVersions.size() != entities.size()) {
-            return false;
+    public void initRecycleView(ArrayList<AndroidVersion> androidVersions) {
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setAdapter(new AndroidVersionAdapter(androidVersions));
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+    }
+
+    private void saveToDataBase() {
+        if (dbService.calledResultEqualsEntities(savedVersions, entities)) {
+            Toast.makeText(MainActivity.this, "Database is up-to-date, no new item!", Toast.LENGTH_SHORT).show();
+        } else {
+            entities = dbService.getEntitiesFromAndroidVersions(savedVersions);
+            new InsertTask(MainActivity.this, entities).execute();
+            Toast.makeText(MainActivity.this, "Database has been updated with new item(s)!", Toast.LENGTH_SHORT).show();
         }
-        Collections.sort(savedVersions);
-        Collections.sort(entities);
-        for (int i = 0; i < savedVersions.size(); i++) {
-            if (!savedVersions.get(i).getCodeName().equals(entities.get(i).getCodeName())) {
-                result = false;
-                break;
-            }
+    }
+    private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
+
+        private WeakReference<MainActivity> activityReference;
+
+        private List<Version> versions;
+        // only retain a weak reference to the activity
+
+        InsertTask(MainActivity context, List<Version> versions) {
+            activityReference = new WeakReference<>(context);
+            this.versions = versions;
         }
-        return result;
+        // doInBackground methods runs on a worker thread
+
+        @Override
+        protected Boolean doInBackground(Void... objs) {
+            activityReference.get().dbVersions.getVersionDao().deleteTable();
+            activityReference.get().dbVersions.getVersionDao().insertAll(versions);
+            return true;
+        }
+        // onPostExecute runs on main thread
+        @Override
+        protected void onPostExecute(Boolean bool) {
+        }
+
     }
 
     private void displayList() {
@@ -88,12 +107,12 @@ public class MainActivity extends AppCompatActivity {
         // fetch list of notes in background thread
         new RetrieveTask(this).execute();
     }
-
     private static class RetrieveTask extends AsyncTask<Void, Void, List<Version>> {
 
-        private WeakReference<MainActivity> activityReference;
 
+        private WeakReference<MainActivity> activityReference;
         // only retain a weak reference to the activity
+
         RetrieveTask(MainActivity context) {
             activityReference = new WeakReference<>(context);
         }
@@ -105,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
             else
                 return null;
         }
-
         @Override
         protected void onPostExecute(List<Version> versions) {
             if (versions != null && versions.size() > 0) {
@@ -113,42 +131,8 @@ public class MainActivity extends AppCompatActivity {
                 for (Version v : activityReference.get().entities) {
                     Log.i("entity - Code name", v.getCodeName());
                 }
-
-                // create and set the adapter on RecyclerView instance to display list
-//                activityReference.get().notesAdapter = new NotesAdapter(notes, activityReference.get());
-//                activityReference.get().recyclerView.setAdapter(activityReference.get().notesAdapter);
             }
         }
-    }
 
-    private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
-
-        private WeakReference<MainActivity> activityReference;
-        private List<Version> versions;
-
-        // only retain a weak reference to the activity
-        InsertTask(MainActivity context, List<Version> versions) {
-            activityReference = new WeakReference<>(context);
-            this.versions = versions;
-        }
-
-        // doInBackground methods runs on a worker thread
-        @Override
-        protected Boolean doInBackground(Void... objs) {
-            activityReference.get().dbVersions.getVersionDao().deleteTable();
-            activityReference.get().dbVersions.getVersionDao().insertAll(versions);
-            return true;
-        }
-
-        // onPostExecute runs on main thread
-        @Override
-        protected void onPostExecute(Boolean bool) {
-        }
-    }
-
-    public void initRecycleView(ArrayList<AndroidVersion> androidVersions) {
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setAdapter(new AndroidVersionAdapter(androidVersions));
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
     }
 }
