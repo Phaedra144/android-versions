@@ -23,7 +23,7 @@ public class AndroidVersion implements Comparable<AndroidVersion> {
 
     @Override
     public int compareTo(AndroidVersion o) {
-        return (int) (this.getReleaseDate() - o.getReleaseDate());
+        return this.getApiLevel() - o.getApiLevel();
     }
 
     public String convertToNiceDateFormat(long startDate) {

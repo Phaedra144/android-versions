@@ -35,6 +35,6 @@ public class Version implements Comparable<Version> {
 
     @Override
     public int compareTo(Version o) {
-        return (int) (this.getRelaseDate() - o.getRelaseDate());
+        return this.getApiLevel() - o.getApiLevel();
     }
 }
