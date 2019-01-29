@@ -9,9 +9,13 @@ import com.dpdgroup.versions.android.androidversions.network.AndroidVersionsAPI;
 import com.dpdgroup.versions.android.androidversions.network.RetrofitService;
 import com.dpdgroup.versions.android.androidversions.network.response.AndroidVersionsResponse;
 import com.dpdgroup.versions.android.androidversions.persistence.AppDatabase;
+import com.dpdgroup.versions.android.androidversions.persistence.entity.Version;
+import com.dpdgroup.versions.android.androidversions.persistence.service.DbService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -22,7 +26,11 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     static List<AndroidVersion> savedVersions = new ArrayList<>();
+    static List<Version> entities = new ArrayList<>();
     TextView hello;
+    @Inject
+    DbService dbService;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         hello = findViewById(R.id.helloText);
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "versions").build();
-        savedVersions = db.dbService().convertEntitiesToModels(db.versionDao().getAll());
+                AppDatabase.class, "versions").allowMainThreadQueries().build();
+        entities = db.versionDao().getAll();
+        savedVersions = dbService.convertEntitiesToModels(entities);
         requestAndroidVersions();
     }
 

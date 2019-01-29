@@ -10,17 +10,17 @@ import lombok.Getter;
 public class Version {
 
     @PrimaryKey
-    int id;
+    public int id;
     @ColumnInfo(name = "image_url")
-    String imageUrl;
+    public String imageUrl;
     @ColumnInfo(name = "relase_date")
-    int relaseDate;
+    public int relaseDate;
     @ColumnInfo(name = "version_number")
-    String versionNumber;
+    public String versionNumber;
     @ColumnInfo(name = "row_type")
-    int rowType;
+    public int rowType;
     @ColumnInfo(name = "code_name")
-    String codeName;
+    public String codeName;
     @ColumnInfo(name = "api_level")
-    int apiLevel;
+    public int apiLevel;
 }

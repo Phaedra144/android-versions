@@ -6,7 +6,12 @@ import com.dpdgroup.versions.android.androidversions.persistence.entity.Version;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class DbService {
+
+    public DbService() {
+    }
 
     public List<AndroidVersion> convertEntitiesToModels(List<Version> versionList) {
         List<AndroidVersion> androidVersionList = new ArrayList<>();
