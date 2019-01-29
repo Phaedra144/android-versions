@@ -1,7 +1,5 @@
 package com.dpdgroup.versions.android.androidversions.model;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +9,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AndroidVersionResponse {
+public class AndroidVersion {
 
-    List<AndroidVersion> androidVersionList;
+    String imageUrl;
+    String relaseDate;
+    int versionNumber;
+    int rowType;
+    String codeName;
+    int apiLevel;
 }
