@@ -7,6 +7,7 @@ import com.dpdgroup.versions.android.androidversions.R;
 import com.dpdgroup.versions.android.androidversions.model.AndroidVersion;
 import com.dpdgroup.versions.android.androidversions.network.AndroidVersionsAPI;
 import com.dpdgroup.versions.android.androidversions.network.RetrofitService;
+import com.dpdgroup.versions.android.androidversions.network.response.AndroidVersionsResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    static List<AndroidVersion> savedVersions = new ArrayList<>();
     TextView hello;
 
     @Override
@@ -30,18 +32,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestAndroidVersions() {
         AndroidVersionsAPI apiService = RetrofitService.getAndroidVersions();
-        Call<List<AndroidVersion>> call = apiService.callAndroidVersions();
-        call.enqueue(new Callback<List<AndroidVersion>>() {
+        Call<AndroidVersionsResponse> call = apiService.callAndroidVersions();
+        call.enqueue(new Callback<AndroidVersionsResponse>() {
             @Override
-            public void onResponse(Call<List<AndroidVersion>> call, Response<List<AndroidVersion>> response) {
-                ArrayList<AndroidVersion> androidVersions = (ArrayList<AndroidVersion>) response.body();
-                hello.setText(androidVersions.get(0).getCodeName());
+            public void onResponse(Call<AndroidVersionsResponse> call, Response<AndroidVersionsResponse> response) {
+                savedVersions = response.body();
+                hello.setText(savedVersions.get(0).getCodeName());
             }
 
             @Override
-            public void onFailure(Call<List<AndroidVersion>> call, Throwable t) {
+            public void onFailure(Call<AndroidVersionsResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+
+        super.onStop();
     }
 }
