@@ -35,4 +35,16 @@ public class AndroidVersion implements Comparable<AndroidVersion> {
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "AndroidVersion{" +
+                "imageUrl='" + imageUrl + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", versionNumber='" + versionNumber + '\'' +
+                ", rowType=" + rowType +
+                ", codeName='" + codeName + '\'' +
+                ", apiLevel=" + apiLevel +
+                '}';
+    }
 }

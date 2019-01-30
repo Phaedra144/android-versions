@@ -2,7 +2,6 @@ package com.dpdgroup.versions.android.androidversions.activity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.dpdgroup.versions.android.androidversions.R;
@@ -60,9 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AndroidVersionsResponse> call, Response<AndroidVersionsResponse> response) {
                 savedVersions = response.body();
-                for (AndroidVersion v : savedVersions) {
-                    Log.i("entity -  relase date ", " " + v.getReleaseDate());
-                }
+
                 initRecycleView((ArrayList<AndroidVersion>) savedVersions);
                 saveToDataBase();
             }
