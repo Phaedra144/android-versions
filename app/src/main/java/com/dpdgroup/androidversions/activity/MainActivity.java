@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Database is up-to-date, no new item!", Toast.LENGTH_SHORT).show();
         } else {
             entities = dbService.getEntitiesFromAndroidVersions(savedVersions);
-            new InsertTask(MainActivity.this, entities, dbVersions).execute();
+            new InsertTask(entities, dbVersions).execute();
             Toast.makeText(MainActivity.this, "Database has been updated with new item(s)!", Toast.LENGTH_SHORT).show();
         }
     }
@@ -96,6 +96,6 @@ public class MainActivity extends AppCompatActivity {
         // initialize database instance
         dbVersions = AppDatabase.getInstance(MainActivity.this);
         // fetch list of notes in background thread
-        new RetrieveTask(this, entities, dbVersions).execute();
+        new RetrieveTask(entities, dbVersions).execute();
     }
 }

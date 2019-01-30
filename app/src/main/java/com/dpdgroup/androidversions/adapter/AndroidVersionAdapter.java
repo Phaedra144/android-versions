@@ -79,7 +79,7 @@ public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAd
         ImageView androidImage;
         CardView cardView;
 
-        public VersionsAdepterViewHolder(View v) {
+        VersionsAdepterViewHolder(View v) {
             super(v);
             codeName = v.findViewById(R.id.codeNameText);
             apiLevel = v.findViewById(R.id.apiLevelText);

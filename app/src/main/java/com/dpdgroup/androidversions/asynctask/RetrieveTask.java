@@ -10,23 +10,18 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class RetrieveTask extends AsyncTask<Void, Void, List<Version>> {
-    private WeakReference<MainActivity> activityReference;
     private List<Version> entities;
     private AppDatabase dbVersions;
 
     // only retain a weak reference to the activity
-    public RetrieveTask(MainActivity context, List<Version> versions, AppDatabase dbVersions) {
-        activityReference = new WeakReference<>(context);
+    public RetrieveTask(List<Version> versions, AppDatabase dbVersions) {
         this.entities = versions;
         this.dbVersions = dbVersions;
     }
 
     @Override
     protected List<Version> doInBackground(Void... voids) {
-        if (activityReference.get() != null)
             return dbVersions.getVersionDao().getAll();
-        else
-            return null;
     }
 
     @Override
