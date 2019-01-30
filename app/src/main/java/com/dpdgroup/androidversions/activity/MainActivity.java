@@ -31,7 +31,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     static List<Version> savedVersions;
-    List<VersionEntity> entities;
+    public List<VersionEntity> entities;
     AppDatabase dbVersions;
     DbService dbService;
 
@@ -95,6 +95,6 @@ public class MainActivity extends AppCompatActivity {
         // initialize database instance
         dbVersions = AppDatabase.getInstance(MainActivity.this);
         // fetch list of notes in background thread
-        new RetrieveTask(entities, dbVersions, this).execute();
+        new RetrieveTask(dbVersions, dbService,this).execute();
     }
 }

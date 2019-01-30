@@ -14,7 +14,7 @@ public class VersionEntity implements Comparable<VersionEntity> {
     @ColumnInfo(name = "image_url")
     public String imageUrl;
     @ColumnInfo(name = "relase_date")
-    public long relaseDate;
+    public long releaseDate;
     @ColumnInfo(name = "version_number")
     public String versionNumber;
     @ColumnInfo(name = "row_type")
@@ -24,9 +24,9 @@ public class VersionEntity implements Comparable<VersionEntity> {
     @ColumnInfo(name = "api_level")
     public int apiLevel;
 
-    public VersionEntity(String imageUrl, long relaseDate, String versionNumber, int rowType, String codeName, int apiLevel) {
+    public VersionEntity(String imageUrl, long releaseDate, String versionNumber, int rowType, String codeName, int apiLevel) {
         this.imageUrl = imageUrl;
-        this.relaseDate = relaseDate;
+        this.releaseDate = releaseDate;
         this.versionNumber = versionNumber;
         this.rowType = rowType;
         this.codeName = codeName;

@@ -22,6 +22,16 @@ public class DbService {
         return entities;
     }
 
+    public List<Version> getVersionFromVersionEntities(List<VersionEntity> versionsEntities) {
+        List<Version> versions = new ArrayList<>();
+        for (VersionEntity versionEntity : versionsEntities) {
+            Version version = new Version(versionEntity.getImageUrl(), versionEntity.getReleaseDate(), versionEntity.getVersionNumber(), versionEntity.getRowType(), versionEntity.getCodeName(), versionEntity.getApiLevel());
+            versions.add(version);
+        }
+        return versions;
+    }
+
+
     public boolean calledResultEqualsEntities(List<Version> savedVersions, List<VersionEntity> entities) {
         boolean result = true;
         if (savedVersions.size() != entities.size()) {

@@ -25,6 +25,7 @@ public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAd
     Context context;
     RecyclerView recyclerView;
     boolean isClicked = true;
+    int selectedPosition = RecyclerView.NO_POSITION;
 
     public AndroidVersionAdapter(ArrayList<Version> versions, Context context) {
         this.versions = versions;
@@ -39,7 +40,7 @@ public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VersionsAdepterViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final VersionsAdepterViewHolder holder, final int position) {
         holder.codeName.setText(versions.get(position).getCodeName());
         holder.apiLevel.setText("Api level: " + versions.get(position).getApiLevel());
         holder.relaseDate.setText("Relase date: " + versions.get(position).convertToNiceDateFormat(versions.get(position).getReleaseDate()));
@@ -47,18 +48,26 @@ public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAd
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isClicked) {
-                    v.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
-                    isClicked = false;
-                    Log.i("true", String.valueOf(v.getTouchDelegate()));
+                if (selectedPosition != RecyclerView.NO_POSITION) {
+                    notifyItemChanged(selectedPosition);
+                }
+                selectedPosition = holder.getAdapterPosition();
+                notifyItemChanged(selectedPosition);
+                if (versions.get(selectedPosition).equals(versions.get(position))) {
+                    if(isClicked) {
+                        v.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+                        isClicked = false;
+                        Log.i("true", String.valueOf(v.getTouchDelegate()));
 
-                } else {
-                    v.setBackgroundColor(ContextCompat.getColor(context, R.color.cardview_light_background));
-                    isClicked = true;
-                    Log.i("false", String.valueOf(v.getId()));
+                    } else {
+                        v.setBackgroundColor(ContextCompat.getColor(context, R.color.cardview_light_background));
+                        isClicked = true;
+                        Log.i("false", String.valueOf(v.getId()));
+                    }
                 }
             }
         });
+
     }
 
     @Override
