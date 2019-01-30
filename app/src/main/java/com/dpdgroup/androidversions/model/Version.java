@@ -2,6 +2,7 @@ package com.dpdgroup.androidversions.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AndroidVersion implements Comparable<AndroidVersion> {
+public class Version implements Comparable<Version> {
 
     String imageUrl;
     long releaseDate;
@@ -22,7 +23,7 @@ public class AndroidVersion implements Comparable<AndroidVersion> {
     int apiLevel;
 
     @Override
-    public int compareTo(AndroidVersion o) {
+    public int compareTo(Version o) {
         return this.getApiLevel() - o.getApiLevel();
     }
 
@@ -30,7 +31,7 @@ public class AndroidVersion implements Comparable<AndroidVersion> {
         String result = String.valueOf(startDate);
         if (startDate != 0) {
             Date date = new Date(startDate * 1000);
-            SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             result = df2.format(date);
         }
         return result;
@@ -38,7 +39,7 @@ public class AndroidVersion implements Comparable<AndroidVersion> {
 
     @Override
     public String toString() {
-        return "AndroidVersion{" +
+        return "Version{" +
                 "imageUrl='" + imageUrl + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", versionNumber='" + versionNumber + '\'' +

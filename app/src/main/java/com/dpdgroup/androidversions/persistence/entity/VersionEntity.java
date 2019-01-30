@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
-public class Version implements Comparable<Version> {
+public class VersionEntity implements Comparable<VersionEntity> {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -24,7 +24,7 @@ public class Version implements Comparable<Version> {
     @ColumnInfo(name = "api_level")
     public int apiLevel;
 
-    public Version(String imageUrl, long relaseDate, String versionNumber, int rowType, String codeName, int apiLevel) {
+    public VersionEntity(String imageUrl, long relaseDate, String versionNumber, int rowType, String codeName, int apiLevel) {
         this.imageUrl = imageUrl;
         this.relaseDate = relaseDate;
         this.versionNumber = versionNumber;
@@ -34,7 +34,7 @@ public class Version implements Comparable<Version> {
     }
 
     @Override
-    public int compareTo(Version o) {
+    public int compareTo(VersionEntity o) {
         return this.getApiLevel() - o.getApiLevel();
     }
 }

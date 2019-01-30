@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dpdgroup.androidversions.R;
-import com.dpdgroup.androidversions.model.AndroidVersion;
+import com.dpdgroup.androidversions.model.Version;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,13 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAdapter.VersionsAdepterViewHolder> {
 
-    ArrayList<AndroidVersion> androidVersions;
+    ArrayList<Version> versions;
     Context context;
     RecyclerView recyclerView;
     boolean isClicked = true;
 
-    public AndroidVersionAdapter(ArrayList<AndroidVersion> androidVersions, Context context) {
-        this.androidVersions = androidVersions;
+    public AndroidVersionAdapter(ArrayList<Version> versions, Context context) {
+        this.versions = versions;
         this.context = context;
     }
 
@@ -40,10 +40,10 @@ public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAd
 
     @Override
     public void onBindViewHolder(@NonNull VersionsAdepterViewHolder holder, final int position) {
-        holder.codeName.setText(androidVersions.get(position).getCodeName());
-        holder.apiLevel.setText("Api level: " + androidVersions.get(position).getApiLevel());
-        holder.relaseDate.setText("Relase date: " + androidVersions.get(position).convertToNiceDateFormat(androidVersions.get(position).getReleaseDate()));
-        getImages(holder, androidVersions.get(position));
+        holder.codeName.setText(versions.get(position).getCodeName());
+        holder.apiLevel.setText("Api level: " + versions.get(position).getApiLevel());
+        holder.relaseDate.setText("Relase date: " + versions.get(position).convertToNiceDateFormat(versions.get(position).getReleaseDate()));
+        getImages(holder, versions.get(position));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +63,7 @@ public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAd
 
     @Override
     public int getItemCount() {
-        return androidVersions.size();
+        return versions.size();
     }
 
     @Override
@@ -89,7 +89,7 @@ public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAd
         }
     }
 
-    private void getImages(VersionsAdepterViewHolder holder, AndroidVersion version) {
+    private void getImages(VersionsAdepterViewHolder holder, Version version) {
         holder.androidImage.setImageBitmap(null);
         Picasso.get().load(version.getImageUrl()).placeholder(R.drawable.android_bike).resize(150, 150).centerCrop().into(holder.androidImage);
     }

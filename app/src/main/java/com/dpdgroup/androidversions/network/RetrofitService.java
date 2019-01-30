@@ -16,8 +16,8 @@ public class RetrofitService {
                 .build();
     }
 
-    public static AndroidVersionsAPI getAndroidVersions() {
-        return getConnection(BASE_URL_BACKEND).create(AndroidVersionsAPI.class);
+    public static VersionAPI getAndroidVersions() {
+        return getConnection(BASE_URL_BACKEND).create(VersionAPI.class);
     }
 
 

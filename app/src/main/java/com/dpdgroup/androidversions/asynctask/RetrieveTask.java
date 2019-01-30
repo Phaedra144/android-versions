@@ -2,32 +2,30 @@ package com.dpdgroup.androidversions.asynctask;
 
 import android.os.AsyncTask;
 
-import com.dpdgroup.androidversions.activity.MainActivity;
 import com.dpdgroup.androidversions.persistence.AppDatabase;
-import com.dpdgroup.androidversions.persistence.entity.Version;
+import com.dpdgroup.androidversions.persistence.entity.VersionEntity;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class RetrieveTask extends AsyncTask<Void, Void, List<Version>> {
-    private List<Version> entities;
+public class RetrieveTask extends AsyncTask<Void, Void, List<VersionEntity>> {
+    private List<VersionEntity> entities;
     private AppDatabase dbVersions;
 
     // only retain a weak reference to the activity
-    public RetrieveTask(List<Version> versions, AppDatabase dbVersions) {
-        this.entities = versions;
+    public RetrieveTask(List<VersionEntity> versionEntities, AppDatabase dbVersions) {
+        this.entities = versionEntities;
         this.dbVersions = dbVersions;
     }
 
     @Override
-    protected List<Version> doInBackground(Void... voids) {
+    protected List<VersionEntity> doInBackground(Void... voids) {
             return dbVersions.getVersionDao().getAll();
     }
 
     @Override
-    protected void onPostExecute(List<Version> versions) {
-        if (versions != null && versions.size() > 0) {
-            entities = versions;
+    protected void onPostExecute(List<VersionEntity> versionEntities) {
+        if (versionEntities != null && versionEntities.size() > 0) {
+            entities = versionEntities;
         }
     }
 }

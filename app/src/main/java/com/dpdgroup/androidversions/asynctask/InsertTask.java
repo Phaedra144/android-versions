@@ -3,17 +3,17 @@ package com.dpdgroup.androidversions.asynctask;
 import android.os.AsyncTask;
 
 import com.dpdgroup.androidversions.persistence.AppDatabase;
-import com.dpdgroup.androidversions.persistence.entity.Version;
+import com.dpdgroup.androidversions.persistence.entity.VersionEntity;
 
 import java.util.List;
 
 public class InsertTask extends AsyncTask<Void, Void, Boolean> {
-    private List<Version> versions;
+    private List<VersionEntity> versionEntities;
     private AppDatabase dbVersions;
     // only retain a weak reference to the activity
 
-    public InsertTask(List<Version> versions, AppDatabase dbVersions) {
-        this.versions = versions;
+    public InsertTask(List<VersionEntity> versionEntities, AppDatabase dbVersions) {
+        this.versionEntities = versionEntities;
         this.dbVersions = dbVersions;
     }
     // doInBackground methods runs on a worker thread
@@ -21,7 +21,7 @@ public class InsertTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected Boolean doInBackground(Void... objs) {
         dbVersions.getVersionDao().deleteTable();
-        dbVersions.getVersionDao().insertAll(versions);
+        dbVersions.getVersionDao().insertAll(versionEntities);
         return true;
     }
 
