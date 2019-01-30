@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         savedVersions = new ArrayList<>();
         entities = new ArrayList<>();
         dbService = new DbService();
-        requestAndroidVersions();
         displayList();
 
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void requestAndroidVersions() {
+    public void requestAndroidVersions() {
         VersionAPI apiService = RetrofitService.getAndroidVersions();
         Call<VersionResponse> call = apiService.callAndroidVersions();
         call.enqueue(new Callback<VersionResponse>() {
@@ -96,6 +95,6 @@ public class MainActivity extends AppCompatActivity {
         // initialize database instance
         dbVersions = AppDatabase.getInstance(MainActivity.this);
         // fetch list of notes in background thread
-        new RetrieveTask(entities, dbVersions).execute();
+        new RetrieveTask(entities, dbVersions, this).execute();
     }
 }
