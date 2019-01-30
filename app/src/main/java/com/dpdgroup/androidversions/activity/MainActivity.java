@@ -1,11 +1,12 @@
 package com.dpdgroup.androidversions.activity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.dpdgroup.androidversions.R;
 import com.dpdgroup.androidversions.adapter.AndroidVersionAdapter;
+import com.dpdgroup.androidversions.asynctask.InsertTask;
+import com.dpdgroup.androidversions.asynctask.RetrieveTask;
 import com.dpdgroup.androidversions.model.AndroidVersion;
 import com.dpdgroup.androidversions.network.AndroidVersionsAPI;
 import com.dpdgroup.androidversions.network.RetrofitService;
@@ -14,7 +15,6 @@ import com.dpdgroup.androidversions.persistence.AppDatabase;
 import com.dpdgroup.androidversions.persistence.entity.Version;
 import com.dpdgroup.androidversions.persistence.service.DbService;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,15 +30,18 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    static List<AndroidVersion> savedVersions = new ArrayList<>();
-    List<Version> entities = new ArrayList<>();
+    static List<AndroidVersion> savedVersions;
+    List<Version> entities;
     AppDatabase dbVersions;
-    DbService dbService = new DbService();
+    DbService dbService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        savedVersions = new ArrayList<>();
+        entities = new ArrayList<>();
+        dbService = new DbService();
         requestAndroidVersions();
         displayList();
 
@@ -59,9 +62,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AndroidVersionsResponse> call, Response<AndroidVersionsResponse> response) {
                 savedVersions = response.body();
-
                 initRecycleView((ArrayList<AndroidVersion>) savedVersions);
-                saveToDataBase();
+                saveToDatabase();
             }
 
             @Override
@@ -80,37 +82,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
     }
 
-    private void saveToDataBase() {
+    private void saveToDatabase() {
         if (dbService.calledResultEqualsEntities(savedVersions, entities)) {
             Toast.makeText(MainActivity.this, "Database is up-to-date, no new item!", Toast.LENGTH_SHORT).show();
         } else {
             entities = dbService.getEntitiesFromAndroidVersions(savedVersions);
-            new InsertTask(MainActivity.this, entities).execute();
+            new InsertTask(MainActivity.this, entities, dbVersions).execute();
             Toast.makeText(MainActivity.this, "Database has been updated with new item(s)!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private static class InsertTask extends AsyncTask<Void, Void, Boolean> {
-        private WeakReference<MainActivity> activityReference;
-        private List<Version> versions;
-        // only retain a weak reference to the activity
-
-        InsertTask(MainActivity context, List<Version> versions) {
-            activityReference = new WeakReference<>(context);
-            this.versions = versions;
-        }
-        // doInBackground methods runs on a worker thread
-
-        @Override
-        protected Boolean doInBackground(Void... objs) {
-            activityReference.get().dbVersions.getVersionDao().deleteTable();
-            activityReference.get().dbVersions.getVersionDao().insertAll(versions);
-            return true;
-        }
-
-        // onPostExecute runs on main thread
-        @Override
-        protected void onPostExecute(Boolean bool) {
         }
     }
 
@@ -118,30 +96,6 @@ public class MainActivity extends AppCompatActivity {
         // initialize database instance
         dbVersions = AppDatabase.getInstance(MainActivity.this);
         // fetch list of notes in background thread
-        new RetrieveTask(this).execute();
-    }
-
-    private static class RetrieveTask extends AsyncTask<Void, Void, List<Version>> {
-        private WeakReference<MainActivity> activityReference;
-
-        // only retain a weak reference to the activity
-        RetrieveTask(MainActivity context) {
-            activityReference = new WeakReference<>(context);
-        }
-
-        @Override
-        protected List<Version> doInBackground(Void... voids) {
-            if (activityReference.get() != null)
-                return activityReference.get().dbVersions.getVersionDao().getAll();
-            else
-                return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<Version> versions) {
-            if (versions != null && versions.size() > 0) {
-                activityReference.get().entities = versions;
-            }
-        }
+        new RetrieveTask(this, entities, dbVersions).execute();
     }
 }
