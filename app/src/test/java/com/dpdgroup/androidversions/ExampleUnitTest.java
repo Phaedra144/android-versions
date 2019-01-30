@@ -1,4 +1,4 @@
-package com.dpdgroup.versions.android.androidversions;
+package com.dpdgroup.androidversions;
 
 import org.junit.Test;
 

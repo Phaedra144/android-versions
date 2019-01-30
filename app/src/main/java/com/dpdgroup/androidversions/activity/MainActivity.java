@@ -1,18 +1,18 @@
-package com.dpdgroup.versions.android.androidversions.activity;
+package com.dpdgroup.androidversions.activity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.dpdgroup.versions.android.androidversions.R;
-import com.dpdgroup.versions.android.androidversions.adapter.AndroidVersionAdapter;
-import com.dpdgroup.versions.android.androidversions.model.AndroidVersion;
-import com.dpdgroup.versions.android.androidversions.network.AndroidVersionsAPI;
-import com.dpdgroup.versions.android.androidversions.network.RetrofitService;
-import com.dpdgroup.versions.android.androidversions.network.response.AndroidVersionsResponse;
-import com.dpdgroup.versions.android.androidversions.persistence.AppDatabase;
-import com.dpdgroup.versions.android.androidversions.persistence.entity.Version;
-import com.dpdgroup.versions.android.androidversions.persistence.service.DbService;
+import com.dpdgroup.androidversions.R;
+import com.dpdgroup.androidversions.adapter.AndroidVersionAdapter;
+import com.dpdgroup.androidversions.model.AndroidVersion;
+import com.dpdgroup.androidversions.network.AndroidVersionsAPI;
+import com.dpdgroup.androidversions.network.RetrofitService;
+import com.dpdgroup.androidversions.network.response.AndroidVersionsResponse;
+import com.dpdgroup.androidversions.persistence.AppDatabase;
+import com.dpdgroup.androidversions.persistence.entity.Version;
+import com.dpdgroup.androidversions.persistence.service.DbService;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.dpdgroup.versions.android.androidversions.adapter;
+package com.dpdgroup.androidversions.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dpdgroup.versions.android.androidversions.R;
-import com.dpdgroup.versions.android.androidversions.model.AndroidVersion;
+import com.dpdgroup.androidversions.R;
+import com.dpdgroup.androidversions.model.AndroidVersion;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

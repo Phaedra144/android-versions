@@ -1,4 +1,4 @@
-package com.dpdgroup.versions.android.androidversions.network;
+package com.dpdgroup.androidversions.network;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

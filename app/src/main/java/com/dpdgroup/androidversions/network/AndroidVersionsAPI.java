@@ -1,6 +1,6 @@
-package com.dpdgroup.versions.android.androidversions.network;
+package com.dpdgroup.androidversions.network;
 
-import com.dpdgroup.versions.android.androidversions.network.response.AndroidVersionsResponse;
+import com.dpdgroup.androidversions.network.response.AndroidVersionsResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

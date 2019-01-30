@@ -1,4 +1,4 @@
-package com.dpdgroup.versions.android.androidversions;
+package com.dpdgroup.androidversions;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.dpdgroup.versions.android.androidversions", appContext.getPackageName());
+        assertEquals("com.dpdgroup.androidversions", appContext.getPackageName());
     }
 }

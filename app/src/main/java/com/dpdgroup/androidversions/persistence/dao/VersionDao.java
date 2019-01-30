@@ -1,6 +1,6 @@
-package com.dpdgroup.versions.android.androidversions.persistence.dao;
+package com.dpdgroup.androidversions.persistence.dao;
 
-import com.dpdgroup.versions.android.androidversions.persistence.entity.Version;
+import com.dpdgroup.androidversions.persistence.entity.Version;
 
 import java.util.List;
 

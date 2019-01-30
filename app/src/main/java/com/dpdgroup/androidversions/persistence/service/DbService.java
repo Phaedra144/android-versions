@@ -1,7 +1,7 @@
-package com.dpdgroup.versions.android.androidversions.persistence.service;
+package com.dpdgroup.androidversions.persistence.service;
 
-import com.dpdgroup.versions.android.androidversions.model.AndroidVersion;
-import com.dpdgroup.versions.android.androidversions.persistence.entity.Version;
+import com.dpdgroup.androidversions.model.AndroidVersion;
+import com.dpdgroup.androidversions.persistence.entity.Version;
 
 import java.util.ArrayList;
 import java.util.Collections;

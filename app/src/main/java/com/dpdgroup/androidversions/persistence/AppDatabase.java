@@ -1,9 +1,9 @@
-package com.dpdgroup.versions.android.androidversions.persistence;
+package com.dpdgroup.androidversions.persistence;
 
 import android.content.Context;
 
-import com.dpdgroup.versions.android.androidversions.persistence.dao.VersionDao;
-import com.dpdgroup.versions.android.androidversions.persistence.entity.Version;
+import com.dpdgroup.androidversions.persistence.dao.VersionDao;
+import com.dpdgroup.androidversions.persistence.entity.Version;
 
 import androidx.room.Database;
 import androidx.room.Room;

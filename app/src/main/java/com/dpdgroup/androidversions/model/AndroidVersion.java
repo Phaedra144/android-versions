@@ -1,4 +1,4 @@
-package com.dpdgroup.versions.android.androidversions.model;
+package com.dpdgroup.androidversions.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

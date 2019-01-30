@@ -1,4 +1,4 @@
-package com.dpdgroup.versions.android.androidversions.persistence.entity;
+package com.dpdgroup.androidversions.persistence.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
