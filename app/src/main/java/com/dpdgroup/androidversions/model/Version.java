@@ -11,7 +11,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Version implements Comparable<Version> {
 
@@ -21,6 +20,17 @@ public class Version implements Comparable<Version> {
     int rowType;
     String codeName;
     int apiLevel;
+    boolean isSelected;
+
+    public Version(String imageUrl, long releaseDate, String versionNumber, int rowType, String codeName, int apiLevel) {
+        this.imageUrl = imageUrl;
+        this.releaseDate = releaseDate;
+        this.versionNumber = versionNumber;
+        this.rowType = rowType;
+        this.codeName = codeName;
+        this.apiLevel = apiLevel;
+        this.isSelected = false;
+    }
 
     @Override
     public int compareTo(Version o) {
