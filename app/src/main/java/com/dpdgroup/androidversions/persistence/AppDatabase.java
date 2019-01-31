@@ -25,8 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase buildDatabaseInstance(Context context) {
         return Room.databaseBuilder(context,
                 AppDatabase.class,
-                "VERSIONS")
-                .allowMainThreadQueries().build();
+                "VERSIONS").build();
     }
 
     public void cleanUp(){
