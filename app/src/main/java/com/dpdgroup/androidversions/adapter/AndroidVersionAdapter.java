@@ -24,8 +24,6 @@ public class AndroidVersionAdapter extends RecyclerView.Adapter<AndroidVersionAd
     ArrayList<Version> versions;
     Context context;
     RecyclerView recyclerView;
-    boolean isClicked = true;
-    ArrayList<Integer> selectedItems = new ArrayList<>();
 
     public AndroidVersionAdapter(ArrayList<Version> versions, Context context) {
         this.versions = versions;
